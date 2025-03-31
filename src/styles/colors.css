@@ -1,0 +1,46 @@
+:root {
+  /* Ana Renk Paleti */
+  --ilk-renk: #27374d;
+  --ikinci-renk: #9db2bf;
+  --ucuncu-renk: #526d82; /* Kırmızı */
+  --dorduncu-renk: #dde6ed;
+
+  /* Arkaplan Renkleri */
+  --arkaplan: #9db2bf; /* Koyu arkaplan */
+
+  /* Yeni log renkleri ekliyoruz */
+  --log-info: #3498db; /* Mavi - Bilgi mesajları */
+  --log-success: #2ecc71; /* Yeşil - Başarılı işlemler */
+  --log-warning: #f39c12; /* Turuncu - Uyarılar */
+  --log-error: #e74c3c; /* Kırmızı - Hatalar */
+  --log-debug: #9b59b6; /* Mor - Debug mesajları */
+  --log-default: #95a5a6; /* Gri - Diğer mesajlar */
+
+  /* Panel Renkleri */
+  --panel-red: #ff4d4d;
+  --panel-green: #4caf50;
+  --panel-yellow: #ffeb3b;
+  --panel-cyan: #00bcd4;
+
+  /* Buton Renkleri */
+  --btn-bir: #28a745;
+  --btn-iki: #dc3545;
+  --btn-uc: #ffc107;
+  --btn-dort: #17a2b8;
+  --btn-bes: #6c757d;
+
+  /* Metin Renkleri */
+  --text-dark: #333333;
+  --text-light: #ffffff;
+  --text-muted: #6c757d;
+
+  /* Sistem Renkleri */
+  --success: #28a745;
+  --error: #dc3545;
+  --warning: #ffc107;
+  --info: #17a2b8;
+
+  /* Border Renkleri */
+  --border-light: #dee2e6;
+  --border-dark: #343a40;
+}

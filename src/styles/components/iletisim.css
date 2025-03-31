@@ -1,0 +1,278 @@
+/* Leaflet ve renk dosyalarını içe aktar */
+@import "./leaflet.css";
+@import "../colors.css";
+
+/* Temel değişken tanımları */
+:root {
+  /* Log renkleri */
+  --log-info: #3498db; /* Mavi - Bilgi mesajları */
+  --log-success: #2ecc71; /* Yeşil - Başarılı işlemler */
+  --log-warning: #f39c12; /* Turuncu - Uyarılar */
+  --log-error: #e74c3c; /* Kırmızı - Hatalar */
+  --log-debug: #9b59b6; /* Mor - Debug mesajları */
+  --log-default: #95a5a6; /* Gri - Diğer mesajlar */
+
+  /* Düzen değişkenleri */
+  --header-height: 60px; /* Navbar yüksekliği */
+  --panel-padding: 15px; /* Panel iç boşlukları */
+  --border-radius: 8px; /* Köşe yuvarlaklığı */
+  --gap-size: 7px; /* Elemanlar arası boşluk */
+}
+
+/* Temel sayfa yapısı */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Ana sayfada kaydırmayı engelle */
+}
+
+/* Ana konteyner */
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 4fr 1fr; /* 4:1 oranında iki sütun */
+  grid-template-rows: auto 1fr; /* İki satır */
+  gap: var(--gap-size); /* Elemanlar arası boşluk */
+  padding: var(--gap-size);
+  height: calc(100vh - var(--header-height)); /* Navbar yüksekliğini çıkar */
+  width: 100%;
+  box-sizing: border-box; /* Padding'i hesaplama dahil et */
+  overflow: hidden; /* Taşmaları engelle */
+  position: fixed; /* Sabit pozisyon */
+  top: var(--header-height); /* Navbar altından başlat */
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Navbar örneği (eğer yoksa) */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background: #333;
+  color: white;
+  z-index: 1000; /* Diğer elemanların üstünde */
+}
+
+/* Ortak panel stilleri */
+.status-screen,
+.buttons-panel,
+.simulation-screen,
+.log-panel {
+  padding: var(--panel-padding);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ilk-renk);
+  color: var(--dorduncu-renk);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Durum ekranı özel stilleri */
+.status-screen {
+  grid-row: span 2; /* İki satır kapla */
+}
+
+/* Buton paneli stilleri */
+.button-group {
+  display: grid;
+  grid-template-columns: 1fr; /* Tek sütun */
+  gap: 8px;
+  flex: 1;
+  min-height: 0; /* Flexbox taşma sorununu önle */
+}
+
+/* Buton ortak stilleri */
+.action-button {
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  font-size: clamp(12px, 1.2vw, 14px); /* Duyarlı font boyutu */
+  min-height: 44px; /* Minimum buton yüksekliği */
+}
+
+/* Buton renkleri */
+.start-button {
+  background-color: var(--btn-bir);
+  color: var(--dorduncu-renk);
+}
+.stop-button {
+  background-color: var(--btn-iki);
+  color: var(--dorduncu-renk);
+}
+.settings-button {
+  background-color: var(--btn-uc);
+  color: var(--dorduncu-renk);
+}
+.report-button {
+  background-color: var(--btn-dort);
+  color: var(--dorduncu-renk);
+}
+
+/* Buton hover efekti */
+.action-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* Simülasyon ekranı */
+.simulation-screen {
+  grid-column: 1; /* İlk sütunda yer al */
+  min-height: 0; /* Flexbox taşma sorununu önle */
+}
+
+.simulation-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Flexbox taşma sorununu önle */
+}
+
+/* Harita konteyneri için */
+.simulation-visual {
+  flex: 1;
+  border: 1px dashed var(--dorduncu-renk);
+  border-radius: 4px;
+  min-height: 0; /* Esnek yükseklik */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Leaflet tile'ları için */
+.leaflet-tile {
+  filter: none !important; /* Varsayılan filtreleri kaldır */
+  image-rendering: crisp-edges; /* Daha net görüntü */
+}
+
+.leaflet-container {
+  background: #f5f5f5; /* Yükleme sırasında arkaplan */
+}
+
+/* Performans için layer'ları optimize et */
+.leaflet-layer {
+  will-change: transform;
+}
+
+/* Marker stilleri */
+.leaflet-marker-icon {
+  transition: transform 0.1s ease; /* Daha hafif animasyon */
+}
+
+/* LOG PANELİ ÖZEL STİLLERİ */
+.log-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Flexbox taşma sorununu önle */
+}
+
+.log-panel h2 {
+  position: sticky; /* Yapışkan başlık */
+  top: 0;
+  background-color: var(--ilk-renk);
+  z-index: 1;
+  margin-bottom: 10px;
+}
+
+/* Log içerik konteyneri */
+.log-content-container {
+  flex: 1;
+  overflow-y: auto; /* Dikey kaydırma */
+  padding-right: 5px;
+  scrollbar-width: thin; /* İnce kaydırma çubuğu */
+  scrollbar-color: var(--dorduncu-renk) transparent; /* Kaydırma çubuğu rengi */
+  min-height: 0; /* Flexbox taşma sorununu önle */
+}
+
+/* Log içeriği */
+.log-content {
+  display: flex;
+  flex-direction: column-reverse; /* Yeni loglar üstte */
+  gap: 6px; /* Loglar arası boşluk */
+  font-family: "Roboto Mono", monospace; /* Düzgün log görünümü */
+  font-size: 13px;
+  min-height: min-content;
+}
+
+/* Tekil log stili */
+.log-content p {
+  margin: 0;
+  padding: 8px 10px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.05);
+  line-height: 1.4;
+  word-break: break-word; /* Uzun metinler için */
+}
+
+/* Log tipine göre renkler */
+.log-content .info {
+  color: var(--log-info);
+  border-left: 3px solid var(--log-info);
+}
+.log-content .success {
+  color: var(--log-success);
+  border-left: 3px solid var(--log-success);
+}
+.log-content .warning {
+  color: var(--log-warning);
+  border-left: 3px solid var(--log-warning);
+  font-weight: 500;
+}
+.log-content .error {
+  color: var(--log-error);
+  border-left: 3px solid var(--log-error);
+  font-weight: 500;
+  background-color: rgba(231, 76, 60, 0.1); /* Hafif kırmızı arkaplan */
+}
+.log-content .debug {
+  color: var(--log-debug);
+  border-left: 3px solid var(--log-debug);
+  font-style: italic;
+}
+
+/* Kaydırma çubuğu stilleri */
+.log-content-container::-webkit-scrollbar {
+  width: 6px; /* Kaydırma çubuğu genişliği */
+}
+.log-content-container::-webkit-scrollbar-thumb {
+  background-color: var(--dorduncu-renk);
+  border-radius: 3px;
+}
+
+/* RESPONSIVE TASARIM */
+/* Tablet ve küçük ekranlar */
+@media (max-width: 992px) {
+  .dashboard-container {
+    grid-template-columns: 1fr; /* Tek sütun */
+    grid-template-rows: auto auto auto auto; /* Dört satır */
+    height: auto;
+    min-height: calc(100vh - var(--header-height));
+  }
+
+  .status-screen {
+    grid-row: auto; /* Otomatik satır */
+  }
+
+  .log-panel {
+    max-height: 250px; /* Maksimum yükseklik */
+  }
+}
+
+/* Mobil cihazlar */
+@media (max-width: 576px) {
+  .button-group {
+    grid-template-columns: 1fr; /* Tek sütun */
+  }
+
+  .log-content {
+    font-size: 12px; /* Daha küçük font */
+  }
+}
